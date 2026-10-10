@@ -1,0 +1,36 @@
+manifest:
+  remotes:
+    - name: splitkb
+      url-base: https://github.com/splitkb
+  projects:
+    # splitkb's ZMK fork with Halcyon fixes (pinned; bump with `nix run .#update`)
+    - name: zmk
+      remote: splitkb
+      revision: efbf0195bb2fac61c47896e3b7d5d3165679bc33  # main+halcyon-fixes
+      import:
+        file: app/west.yml
+        name-blocklist:
+          - ci-tools
+          - hal_altera
+          - hal_cypress
+          - hal_infineon
+          - hal_microchip
+          - hal_nxp
+          - hal_openisa
+          - hal_silabs
+          - hal_xtensa
+          - hal_st
+          - hal_ti
+          - loramac-node
+          - mcuboot
+          - mcumgr
+          - net-tools
+          - openthread
+          - edtt
+          - trusted-firmware-m
+    # Board (halcyon_wireless) + shield (halcyon_ferris, mod_battery_*) definitions
+    - name: zmk-halcyon-module
+      remote: splitkb
+      revision: d5ed4c1ec8028905bb3cc3705f3770e09bfd84de  # main
+  self:
+    path: config

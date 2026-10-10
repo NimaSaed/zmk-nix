@@ -1,0 +1,169 @@
+/*
+ * Halcyon Ferris keymap — 1:1 port of my ZSA Voyager Oryx layout
+ * "Nima's 34 keys" (layout eVJKy, revision pjMjbv).
+ *
+ * Only the 34 Voyager keys that were actually bound are used, so the
+ * layout maps directly onto the Ferris. Layer numbers match Oryx.
+ *
+ * Hardware: Halcyon wireless controllers, coin cell battery boards,
+ * e-paper display module on the left half, Cirque touchpad on the right half.
+ * The touchpad works on every layer as a mouse automatically.
+ *
+ * Position reference (34 keys + 10 Halcyon module slots at the end):
+ *
+ *   0  1  2  3  4     5  6  7  8  9
+ *  10 11 12 13 14    15 16 17 18 19
+ *  20 21 22 23 24    25 26 27 28 29
+ *           30 31    32 33
+ */
+
+#include <behaviors.dtsi>
+#include <dt-bindings/zmk/bt.h>
+#include <dt-bindings/zmk/keys.h>
+#include <dt-bindings/zmk/pointing.h>
+#include <dt-bindings/zmk/rgb.h>
+
+#define BASE   0
+#define NUMSYM 1
+#define NAV    2
+#define FUNC   3
+#define MOUSE  4
+
+// Halcyon module key slots (unused by the e-paper / Cirque modules)
+#define HLC_NONE  &none  &none  &none  &none  &none   &none  &none  &none  &none  &none
+#define HLC_TRANS &trans &trans &trans &trans &trans  &trans &trans &trans &trans &trans
+
+// Match QMK/Oryx default mod-tap behaviour: 200 ms tapping term, taps win
+// when rolling keys (ZMK's &mt defaults to hold-preferred), and tap-then-hold
+// within the term repeats the tap (QMK's built-in quick tap).
+&mt {
+    flavor = "tap-preferred";
+    tapping-term-ms = <200>;
+    quick-tap-ms = <200>;
+};
+
+&lt {
+    flavor = "tap-preferred";
+    tapping-term-ms = <200>;
+    quick-tap-ms = <200>;
+};
+
+/ {
+    // Combos from the Oryx layout (defined on the Base layer, 50 ms term
+    // like QMK's default COMBO_TERM).
+    combos {
+        compatible = "zmk,combos";
+
+        combo_esc {          // E + R
+            key-positions = <2 3>;
+            bindings = <&kp ESC>;
+            layers = <BASE>;
+            timeout-ms = <50>;
+        };
+
+        combo_del {          // O + P
+            key-positions = <8 9>;
+            bindings = <&kp DEL>;
+            layers = <BASE>;
+            timeout-ms = <50>;
+        };
+
+        combo_tab {          // C + V
+            key-positions = <22 23>;
+            bindings = <&kp TAB>;
+            layers = <BASE>;
+            timeout-ms = <50>;
+        };
+
+        combo_tmux_prefix {  // J + K -> Ctrl+B (Oryx macro "tmuxprefix")
+            key-positions = <16 17>;
+            bindings = <&kp LC(B)>;
+            layers = <BASE>;
+            timeout-ms = <50>;
+        };
+    };
+
+    keymap {
+        compatible = "zmk,keymap";
+
+        base_layer {
+            display-name = "Base";
+// -----------------------------------------------------------------------------
+// |   Q    |   W   |   E    |   F    |   T    |   |   Y    |   U    |   I    |   O   |   P    |
+// | SHFT/A |   S   | ALT/D  | GUI/F  | CTL/G  |   | CTL/H  | GUI/J  | ALT/K  |   L   | SHFT/; |
+// |   Z    |   X   |   C    |   V    |   B    |   |   N    |   M    |   ,    |   .   |   /    |
+//                        | NAV/SPC | FUNC/ENT |   | MOUSE/ENT | NUMSYM/BSPC |
+            bindings = <
+&kp Q        &kp W  &kp E       &kp R       &kp T          &kp Y        &kp U       &kp I      &kp O   &kp P
+&mt LSHFT A  &kp S  &mt LALT D  &mt LGUI F  &mt LCTRL G    &mt RCTRL H  &mt RGUI J  &mt RALT K &kp L   &mt RSHFT SEMI
+&kp Z        &kp X  &kp C       &kp V       &kp B          &kp N        &kp M       &kp COMMA  &kp DOT &kp FSLH
+                            &lt NAV SPACE  &lt FUNC ENTER  &lt MOUSE ENTER  &lt NUMSYM BSPC
+HLC_NONE
+            >;
+        };
+
+        numsym_layer {
+            display-name = "NumSym";
+// -----------------------------------------------------------------------------
+// |   `    |   (   |   {    |   [    |   '    |   |   "    |   ]    |   }    |   )   |   ~    |
+// | SHFT/1 |   2   | ALT/3  | GUI/4  | CTL/5  |   | CTL/6  | GUI/7  | ALT/8  |   9   | SHFT/0 |
+// |   |    |       |        |   _    |   -    |   |   +    |   =    |        |   \   |   /    |
+//                           |        |        |   |        |        |
+            bindings = <
+&kp GRAVE     &kp LPAR  &kp LBRC      &kp LBKT      &kp SQT          &kp DQT       &kp RBKT     &kp RBRC     &kp RPAR  &kp TILDE
+&mt LSHFT N1  &kp N2    &mt LALT N3   &mt LGUI N4   &mt LCTRL N5     &mt RCTRL N6  &mt RGUI N7  &mt RALT N8  &kp N9    &mt RSHFT N0
+&kp PIPE      &none     &none         &kp UNDER     &kp MINUS        &kp PLUS      &kp EQUAL    &none        &kp BSLH  &kp FSLH
+                                      &trans        &trans           &trans        &trans
+HLC_TRANS
+            >;
+        };
+
+        nav_layer {
+            display-name = "Nav";
+// -----------------------------------------------------------------------------
+// |        |       |        |  PLAY  |  PREV  |   |  NEXT  | SCR DN | SCR UP |       |        |
+// |  SHFT  |       |  ALT   |GUI/BRI+|CTL/VOL+|   |  LEFT  |  DOWN  |   UP   | RIGHT |        |
+// |        |       |        |  BRI-  |  VOL-  |   |  HOME  |  PGDN  |  PGUP  |  END  |        |
+//                           |        |        |   |        |        |
+            bindings = <
+&none      &none  &none     &kp C_PP            &kp C_PREV            &kp C_NEXT  &msc SCRL_DOWN  &msc SCRL_UP  &none      &none
+&kp LSHFT  &none  &kp LALT  &mt LGUI C_BRI_UP   &mt LCTRL C_VOL_UP    &kp LEFT    &kp DOWN        &kp UP        &kp RIGHT  &none
+&none      &none  &none     &kp C_BRI_DN        &kp C_VOL_DN          &kp HOME    &kp PG_DN       &kp PG_UP     &kp END    &none
+                                      &trans        &trans           &trans        &trans
+HLC_TRANS
+            >;
+        };
+
+        func_layer {
+            display-name = "Func";
+// -----------------------------------------------------------------------------
+// |        |       |        |        |        |   |        |        |        |       |        |
+// | SHFT/F1|  F2   | ALT/F3 | GUI/F4 | CTL/F5 |   | CTL/F6 | GUI/F7 | ALT/F8 |  F9   |SHFT/F10|
+// |  F11   |  F12  |        |  RGB-  |  RGB+  |   |  F11   |  F12   |        |       |        |
+//                           |        |        |   |        |        |
+            bindings = <
+&none         &none    &none        &none            &none              &none         &none        &none        &none   &none
+&mt LSHFT F1  &kp F2   &mt LALT F3  &mt LGUI F4      &mt LCTRL F5       &mt RCTRL F6  &mt RGUI F7  &mt RALT F8  &kp F9  &mt RSHFT F10
+&kp F11       &kp F12  &none        &rgb_ug RGB_BRD  &rgb_ug RGB_BRI    &kp F11       &kp F12      &none        &none   &none
+                                      &trans        &trans           &trans        &trans
+HLC_TRANS
+            >;
+        };
+
+        mouse_layer {
+            display-name = "Mouse";
+// -----------------------------------------------------------------------------
+// |        |       |        |        |        |   |        |        |        |       |        |
+// |        |       |  MB3   |  MB1   |  MB2   |   | MS LT  | MS DN  | MS UP  | MS RT |        |
+// |        |       |        |        |        |   | SCR LT | SCR DN | SCR UP | SCR RT|        |
+//                           |        |        |   |        |        |
+            bindings = <
+&none  &none  &none     &none     &none        &none           &none           &none         &none            &none
+&none  &none  &mkp MB3  &mkp MB1  &mkp MB2     &mmv MOVE_LEFT  &mmv MOVE_DOWN  &mmv MOVE_UP  &mmv MOVE_RIGHT  &none
+&none  &none  &none     &none     &none        &msc SCRL_LEFT  &msc SCRL_DOWN  &msc SCRL_UP  &msc SCRL_RIGHT  &none
+                                      &trans        &trans           &trans        &trans
+HLC_TRANS
+            >;
+        };
+    };
+};
