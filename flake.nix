@@ -27,6 +27,10 @@
         parts = [ "dongle" "left" "right" ];
         centralPart = "dongle";
 
+        # ZMK Studio over USB (only applied to the central part, i.e. the dongle).
+        # Unlock with the &studio_unlock key on the Func layer.
+        enableZmkStudio = true;
+
         board = {
           dongle = "halcyon_dongle//zmk";
           _      = "halcyon_wireless//zmk";

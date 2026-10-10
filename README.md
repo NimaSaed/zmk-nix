@@ -38,6 +38,8 @@ mirrored), kept on the NumSym and Func layers like in Oryx.
 
 Combos (Base layer, 50 ms): `E+R` → Esc, `O+P` → Del, `C+V` → Tab, `J+K` → Ctrl+B (tmux prefix).
 
+Additions not in the Oryx layout (Func layer): `Q` → ZMK Studio unlock, `E`/`R` → previous/next underglow effect, `T` → underglow toggle, `Y`/`U` → underglow colour (hue) down/up.
+
 Tap/hold behaviour mimics QMK defaults (200 ms tapping term, tap-preferred,
 quick-tap repeat) — see the `&mt` / `&lt` overrides at the top of the keymap.
 

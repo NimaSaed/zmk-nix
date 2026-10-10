@@ -137,12 +137,15 @@ HLC_TRANS
         func_layer {
             display-name = "Func";
 // -----------------------------------------------------------------------------
-// |        |       |        |        |        |   |        |        |        |       |        |
+// | STUDIO |       |RGB EFR |RGB EFF | RGB TOG|   |RGB HUD |RGB HUI |        |       |        |
 // | SHFT/F1|  F2   | ALT/F3 | GUI/F4 | CTL/F5 |   | CTL/F6 | GUI/F7 | ALT/F8 |  F9   |SHFT/F10|
 // |  F11   |  F12  |        |  RGB-  |  RGB+  |   |  F11   |  F12   |        |       |        |
 //                           |        |        |   |        |        |
+// STUDIO = &studio_unlock (not in the Oryx layout; needed to edit via zmk.studio)
+// RGB TOG = underglow on/off, RGB EFR/EFF = previous/next effect,
+// RGB HUD/HUI = colour (hue) down/up (not in the Oryx layout)
             bindings = <
-&none         &none    &none        &none            &none              &none         &none        &none        &none   &none
+&studio_unlock &none   &rgb_ug RGB_EFR &rgb_ug RGB_EFF &rgb_ug RGB_TOG   &rgb_ug RGB_HUD &rgb_ug RGB_HUI &none    &none   &none
 &mt LSHFT F1  &kp F2   &mt LALT F3  &mt LGUI F4      &mt LCTRL F5       &mt RCTRL F6  &mt RGUI F7  &mt RALT F8  &kp F9  &mt RSHFT F10
 &kp F11       &kp F12  &none        &rgb_ug RGB_BRD  &rgb_ug RGB_BRI    &kp F11       &kp F12      &none        &none   &none
                                       &trans        &trans           &trans        &trans
