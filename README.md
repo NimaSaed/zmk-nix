@@ -33,9 +33,10 @@ for the left half). The right half's Cirque touchpad is forwarded to the dongle
 | 3 | Func   | left inner thumb (Enter)      |
 | 4 | Mouse  | right inner thumb (Enter)     |
 
-The touchpad moves the cursor on every layer. While the Mouse layer is held,
-dragging on the touchpad scrolls instead (`config/halcyon_ferris_dongle.overlay`,
-using ZMK's built-in `zip_xy_to_scroll_mapper`).
+The touchpad moves the cursor (2× speed) and tap = left click on every
+layer. While the Mouse layer is held, dragging on the touchpad scrolls and
+tap = right click instead (`config/halcyon_ferris_dongle.overlay`, using
+ZMK's built-in input processors).
 
 Home-row mods on `A S D F G` / `H J K L ;` (Shift · — · Alt · GUI · Ctrl and
 mirrored), kept on the NumSym and Func layers like in Oryx.
@@ -64,4 +65,4 @@ Files:
 - `config/halcyon_ferris.keymap` — the keymap
 - `config/halcyon_ferris.conf` — Kconfig options (all parts)
 - `config/halcyon_ferris_left.conf` — left-half-only options (peripheral role)
-- `config/halcyon_ferris_dongle.overlay` — dongle-only devicetree (touchpad scroll on the Mouse layer)
+- `config/halcyon_ferris_dongle.overlay` — dongle-only devicetree (touchpad speed, scroll / right-click on the Mouse layer)
