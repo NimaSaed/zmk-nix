@@ -34,9 +34,29 @@ for the left half). The right half's Cirque touchpad is forwarded to the dongle
 | 4 | Mouse  | right inner thumb (Enter)     |
 
 The touchpad moves the cursor (2× speed) and tap = left click on every
-layer. While the Mouse layer is held, dragging on the touchpad scrolls and
-tap = right click instead (`config/halcyon_ferris_dongle.overlay`, using
-ZMK's built-in input processors).
+layer; double-tap-and-hold drags (handled by the Cirque chip). While the
+Mouse layer is held, dragging on the touchpad scrolls and tap = right click
+instead (`config/halcyon_ferris_dongle.overlay`, using ZMK's built-in input
+processors).
+
+`config/halcyon_ferris_right.overlay` raises the touch sensitivity to the
+maximum (`sensitivity = "1x"`, shield default `"2x"`) so light taps register
+(drop back to `"2x"` if the cursor jitters).
+
+`modules/drag-lock/` is a small in-repo ZMK module providing `&drag_lock`,
+the first input processor in every chain of `&trackpad_listener`. It does
+two things:
+
+- Forwards only real button *transitions*. Zephyr's `cirque,pinnacle` driver
+  repeats the button bit in every packet while ZMK reference-counts mouse
+  button presses, so without it a drag stayed stuck after lifting the finger
+  until as many release packets had arrived (a tap could not clear it).
+- Software drag lock: lifting the finger mid-drag keeps the button held for
+  `timeout-ms` (500 ms); touch down and move again within that time and the
+  drag continues, otherwise it releases. Plain taps are forwarded immediately,
+  so clicks / double-clicks are not delayed. The chip only reports the lift
+  for its own tap-drag, so a *continued* drag ends after `soft-drag-idle-ms`
+  (1 s) without motion - keep the finger moving, or lift and wait.
 
 Home-row mods on `A S D F G` / `H J K L ;` (Shift · — · Alt · GUI · Ctrl and
 mirrored), kept on the NumSym and Func layers like in Oryx.
@@ -70,9 +90,11 @@ nix develop          # shell with west/zephyr toolchain
 
 Files:
 
-- `flake.nix` — board/shield selection, `zephyrDepsHash`
+- `flake.nix` — board/shield selection, in-repo modules, `zephyrDepsHash`
 - `config/west.yml` — pinned splitkb ZMK fork + `zmk-halcyon-module`
 - `config/halcyon_ferris.keymap` — the keymap
 - `config/halcyon_ferris.conf` — Kconfig options (all parts)
 - `config/halcyon_ferris_left.conf` — left-half-only options (peripheral role)
-- `config/halcyon_ferris_dongle.overlay` — dongle-only devicetree (touchpad speed, scroll / right-click on the Mouse layer)
+- `config/halcyon_ferris_dongle.overlay` — dongle-only devicetree (touchpad speed, scroll / right-click on the Mouse layer, `&drag_lock`)
+- `config/halcyon_ferris_right.overlay` — right-half-only devicetree (touchpad sensitivity)
+- `modules/drag-lock/` — in-repo ZMK module with the `&drag_lock` input processor (included via `extraCmakeFlags` in `flake.nix`)

@@ -1,0 +1,17 @@
+/*
+ * Right-half-only devicetree overlay (the half with the Cirque touchpad).
+ *
+ * Touch/tap sensitivity: the Pinnacle's ADC attenuation. "1x" is the most
+ * sensitive, "4x" the least (the splitkb mod_cirque shield defaults to "2x").
+ * Taps are detected in the touchpad hardware, so a higher sensitivity makes
+ * light taps register as clicks without pressing hard. If the cursor starts
+ * jittering or the pad reacts to a hovering finger, go back to "2x".
+ *
+ * (idle-packets-count / Z-idle packets are not emitted in relative mode, so
+ * they cannot be used to detect the finger lifting; the dongle's &drag_lock
+ * uses timeouts instead.)
+ */
+
+&trackpad {
+    sensitivity = "1x";
+};

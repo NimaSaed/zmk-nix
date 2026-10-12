@@ -16,10 +16,14 @@
     packages = forAllSystems (system: rec {
       default = firmware;
 
-      firmware = zmk-nix.legacyPackages.${system}.buildSplitKeyboard {
+      firmware = zmk-nix.legacyPackages.${system}.buildSplitKeyboard rec {
         name = "firmware";
 
-        src = nixpkgs.lib.sourceFilesBySuffices self [ ".board" ".cmake" ".conf" ".defconfig" ".dts" ".dtsi" ".json" ".keymap" ".overlay" ".shield" ".yml" "_defconfig" ];
+        src = nixpkgs.lib.sourceFilesBySuffices self [ ".board" ".cmake" ".conf" ".defconfig" ".dts" ".dtsi" ".json" ".keymap" ".overlay" ".shield" ".yml" "_defconfig" ".c" ".h" ".yaml" "CMakeLists.txt" "Kconfig" ];
+
+        # In-repo ZMK modules (modules/<name>, each a Zephyr module with its own
+        # zephyr/module.yml). drag-lock: the &drag_lock touchpad input processor.
+        extraCmakeFlags = [ "-DZMK_EXTRA_MODULES=${src}/modules/drag-lock" ];
 
         # Three parts: the dongle is the central (USB/BT host), both halves are
         # peripherals. The left half additionally needs CONFIG_ZMK_SPLIT_ROLE_CENTRAL=n

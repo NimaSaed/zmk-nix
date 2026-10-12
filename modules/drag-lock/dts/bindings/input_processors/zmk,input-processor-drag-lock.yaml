@@ -1,0 +1,30 @@
+description: |
+  Input processor for tap-capable touchpads (e.g. cirque,pinnacle in relative
+  mode) that forwards only real BTN_TOUCH transitions and adds a software
+  drag lock: when a drag ends because the finger was lifted, the button is
+  held for `timeout-ms`; if the finger returns and moves within that time the
+  drag continues, otherwise the release is sent. Taps without movement are
+  forwarded immediately.
+
+  In relative mode the chip reports the lift only for its own tap-drag; for
+  a continued (software-held) drag there is no lift signal, so the button is
+  released after `soft-drag-idle-ms` without motion.
+
+compatible: "zmk,input-processor-drag-lock"
+
+include: ip_zero_param.yaml
+
+properties:
+  timeout-ms:
+    type: int
+    default: 500
+    description: |
+      How long the button stays held after the finger is lifted mid-drag,
+      i.e. the window in which the finger can be put back to continue.
+  soft-drag-idle-ms:
+    type: int
+    default: 1000
+    description: |
+      In a continued drag, release the button after this long without any
+      touchpad motion (covers the finger lifting, which the chip does not
+      report in this state; holding still longer than this also ends it).

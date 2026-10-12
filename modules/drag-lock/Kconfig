@@ -1,0 +1,11 @@
+DT_COMPAT_ZMK_INPUT_PROCESSOR_DRAG_LOCK := zmk,input-processor-drag-lock
+
+config ZMK_INPUT_PROCESSOR_DRAG_LOCK
+    bool "Input processor: clean button transitions + software drag lock"
+    default $(dt_compat_enabled,$(DT_COMPAT_ZMK_INPUT_PROCESSOR_DRAG_LOCK))
+    depends on ZMK_POINTING
+
+config ZMK_INPUT_PROCESSOR_DRAG_LOCK_TRACE
+    bool "Trace drag-lock state transitions at INFO level"
+    depends on ZMK_INPUT_PROCESSOR_DRAG_LOCK
+    default n

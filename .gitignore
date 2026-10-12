@@ -1,7 +1,11 @@
+# west workspace created by `nix develop` (zephyr + zmk + hal modules)
 /.west
-/modules
 /zephyr
 /zmk
+/modules/*
+!/modules/drag-lock/
 /build
+
+# nix build outputs
 /result
 /result-*
