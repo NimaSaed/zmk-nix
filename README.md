@@ -42,11 +42,21 @@ Home-row mods on `A S D F G` / `H J K L ;` (Shift · — · Alt · GUI · Ctrl a
 mirrored), kept on the NumSym and Func layers like in Oryx.
 
 Combos (Base layer, 50 ms): `E+R` → Esc, `O+P` → Del, `C+V` → Tab, `J+K` → Ctrl+B (tmux prefix).
+`E+R` and `O+P` sit on common bigrams, so they only fire after a 100 ms typing pause (`require-prior-idle-ms`).
 
 Additions not in the Oryx layout (Func layer): `Q` → ZMK Studio unlock, `E`/`R` → previous/next underglow effect, `T` → underglow toggle, `Y`/`U` → underglow colour (hue) down/up.
 
-Tap/hold behaviour mimics QMK defaults (200 ms tapping term, tap-preferred,
-quick-tap repeat) — see the `&mt` / `&lt` overrides at the top of the keymap.
+Tap/hold behaviour (see the top of the keymap):
+
+- Home-row mods use ZMK's recommended ["timeless" configuration](https://zmk.dev/docs/keymaps/behaviors/hold-tap#home-row-mods)
+  (`&hml` / `&hmr`): `balanced` flavour, 280 ms tapping term, 150 ms
+  `require-prior-idle-ms`, positional — a left-hand mod only activates together
+  with a right-hand key or a thumb (and vice versa), `hold-trigger-on-release`
+  so mods on one hand can be stacked. Shortcuts like Ctrl+C (hold `H`, tap `C`)
+  work instantly; same-hand rolls never produce modifiers.
+- Layer-taps on the thumbs are `balanced` (200 ms), so e.g. hold `Space` + tap
+  `J` gives Down right away. Tap-then-hold within 175 ms repeats Space/Backspace.
+- The two `&mt` keys on the Nav layer (GUI/Ctrl on `F`/`G`) are `hold-preferred`.
 
 ## Usage
 
