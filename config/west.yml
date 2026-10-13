@@ -6,7 +6,7 @@ manifest:
     # splitkb's ZMK fork with Halcyon fixes (pinned; bump with `nix run .#update`)
     - name: zmk
       remote: splitkb
-      revision: efbf0195bb2fac61c47896e3b7d5d3165679bc33  # main+halcyon-fixes
+      revision: f0821fb5e7f1577bcfce36fb4ce899cfb395f00a  # main+halcyon-fixes
       import:
         file: app/west.yml
         name-blocklist:
@@ -31,6 +31,6 @@ manifest:
     # Board (halcyon_wireless) + shield (halcyon_ferris, mod_battery_*) definitions
     - name: zmk-halcyon-module
       remote: splitkb
-      revision: d5ed4c1ec8028905bb3cc3705f3770e09bfd84de  # main
+      revision: a83eaa492a678ed12fb5feabc62426dc1ed3a3cb  # main
   self:
     path: config

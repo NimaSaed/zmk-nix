@@ -45,9 +45,10 @@ button that arrives within 320 ms after such a short stroke. A fast
 double-tap-and-hold drags; right after a quick flick, pause a moment before
 tapping or dragging.
 
-`config/halcyon_ferris_right.overlay` sets the touch sensitivity (`"2x"`,
-the shield default; `"1x"` is the most sensitive but makes the single-touch
-pad react to a hovering second finger or the palm, which shows up as jumps).
+`config/halcyon_ferris_right.overlay` sets the touch sensitivity to `"1x"`,
+the most sensitive setting (shield default `"2x"`): the pad loses a light
+finger near its rim at `"2x"`; `"1x"` can react to a hovering second finger
+or the palm instead, drop back if the cursor twitches.
 
 The Cirque driver sends every packet as three BLE notifications (X, Y,
 button+sync) at up to 100 packets/s. The stock ZMK buffers could not carry

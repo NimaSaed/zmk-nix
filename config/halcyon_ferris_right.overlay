@@ -13,7 +13,7 @@
  */
 
 &trackpad {
-    sensitivity = "2x";
+    sensitivity = "1x";
 };
 
 /* USB serial console for CONFIG_ZMK_USB_LOGGING (see halcyon_ferris_right.conf);

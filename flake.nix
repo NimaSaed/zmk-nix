@@ -50,7 +50,7 @@
           right  = "halcyon_ferris_right mod_battery_coincell mod_cirque_hw_right";
         };
 
-        zephyrDepsHash = "sha256-EDv4GgSurJs+ei42LOQIoKjeMJjJBg9g4WeUD4usDcQ=";
+        zephyrDepsHash = "sha256-uXZ4lU8NZNt+tcVW+jLWQBaMLsqopVLb3EvW7RAFEF8=";
 
         meta = {
           description = "ZMK firmware for the Halcyon Ferris";
