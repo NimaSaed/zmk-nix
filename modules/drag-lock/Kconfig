@@ -9,3 +9,16 @@ config ZMK_INPUT_PROCESSOR_DRAG_LOCK_TRACE
     bool "Trace drag-lock state transitions at INFO level"
     depends on ZMK_INPUT_PROCESSOR_DRAG_LOCK
     default n
+
+config ZMK_INPUT_PROCESSOR_DRAG_LOCK_STATS
+    bool "Log touchpad packet statistics every 5 s at INFO level"
+    depends on ZMK_INPUT_PROCESSOR_DRAG_LOCK
+    default n
+    help
+      Counts the packets this processor sees (as delivered to the central):
+      torn packets (X/Y/sync triplet incomplete), bare button events,
+      packets with a large delta, delivery stalls within a stroke,
+      direction flips, and the largest deltas. One summary line per 5 s
+      while there is traffic. Used to tell transport problems (torn
+      packets, stalls) from the touchpad chip itself reporting garbage
+      (intact packets with big deltas / many flips).

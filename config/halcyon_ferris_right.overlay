@@ -13,5 +13,19 @@
  */
 
 &trackpad {
-    sensitivity = "1x";
+    sensitivity = "2x";
+};
+
+/* USB serial console for CONFIG_ZMK_USB_LOGGING (see halcyon_ferris_right.conf);
+ * the halcyon_wireless board does not define one. Harmless when logging is off. */
+/ {
+    chosen {
+        zephyr,console = &cdc_acm_uart;
+    };
+};
+
+&zephyr_udc0 {
+    cdc_acm_uart: cdc_acm_uart {
+        compatible = "zephyr,cdc-acm-uart";
+    };
 };

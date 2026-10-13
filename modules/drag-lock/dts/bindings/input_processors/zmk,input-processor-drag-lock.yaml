@@ -12,7 +12,12 @@ description: |
 
 compatible: "zmk,input-processor-drag-lock"
 
-include: ip_zero_param.yaml
+# One parameter: the button code to emit (e.g. INPUT_BTN_0 for left,
+# INPUT_BTN_1 for right; 0 = INPUT_BTN_TOUCH, also left). The code is
+# latched when a press is forwarded and reused for its release, so a layer
+# (processor chain) change in the middle of a gesture cannot leave ZMK's
+# per-button reference count unbalanced.
+include: ip_one_param.yaml
 
 properties:
   timeout-ms:
@@ -28,3 +33,57 @@ properties:
       In a continued drag, release the button after this long without any
       touchpad motion (covers the finger lifting, which the chip does not
       report in this state; holding still longer than this also ends it).
+  tap-drag-window-ms:
+    type: int
+    default: 500
+    description: |
+      A button press reported by the chip within this time after a tap this
+      processor forwarded is always accepted (double tap, tap-and-hold),
+      regardless of the stroke check below.
+  tap-after-drag-ms:
+    type: int
+    default: 350
+    description: |
+      After a drag was released by the timeout, a motion-less press within
+      this time is the tap that was meant to end the drag (the chip reports
+      taps 200-300 ms late) and is swallowed instead of clicking.
+  stroke-gap-ms:
+    type: int
+    default: 150
+    description: |
+      A pause of at least this long between packets ends a cursor stroke.
+      Also: a motion-less press while a drag is held only ends the drag if
+      no motion arrived for this long; otherwise it is the chip's late tap
+      verdict on a short reposition and the drag continues.
+  tap-after-stroke-ms:
+    type: int
+    default: 320
+    description: |
+      The chip reports a short cursor stroke as a tap about 200-300 ms after
+      the finger lifts, and the next touch as a tap-and-drag. A press that
+      arrives within this time after the end of a stroke is checked against
+      short-stroke-ms and tap-max-stroke; if all match it is swallowed (no
+      click, no drag, the motion passes).
+  short-stroke-ms:
+    type: int
+    default: 250
+    description: |
+      Only strokes that lasted at most this long can have been misread as
+      a tap by the chip.
+  tap-max-stroke:
+    type: int
+    default: 24
+    description: |
+      Only strokes that moved at least this much (sum of |dx| + |dy|) count
+      as cursor strokes for the check; smaller motion is a finger roll or
+      settling before a real tap (measured 2-17 counts; misread flicks were
+      37 and more). 0 disables the check. With TRACE enabled every press
+      logs the preceding stroke's size, length and age for tuning.
+  drag-threshold:
+    type: int
+    default: 8
+    description: |
+      Motion (sum of |dx| + |dy| in counts) that must accumulate while the
+      button is reported pressed before the press counts as a drag. Below
+      it the press is a tap and its release is forwarded immediately, so a
+      slight finger roll during a tap does not arm the drag lock.
