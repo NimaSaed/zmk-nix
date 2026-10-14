@@ -19,7 +19,7 @@
 
 // Wheel scrolling with the &msc keys (Nav and Mouse layers): units per
 // tick at full speed, ZMK's default is 10. Raise/lower to taste.
-#define ZMK_POINTING_DEFAULT_SCRL_VAL 25
+#define ZMK_POINTING_DEFAULT_SCRL_VAL 100
 
 #include <behaviors.dtsi>
 #include <dt-bindings/zmk/bt.h>

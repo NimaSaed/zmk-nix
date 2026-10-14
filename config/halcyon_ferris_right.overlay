@@ -1,0 +1,12 @@
+/*
+ * Right-half-only devicetree overlay (the half with the Cirque touchpad).
+ *
+ * Taps off: the chip's tap-to-click also brings its tap-and-drag gesture,
+ * which turned short strokes into clicks and drags. With taps disabled the
+ * pad only moves the cursor; click and drag with the MB1/MB2/MB3 keys on the
+ * Mouse layer (hold MB1 and move to drag).
+ */
+
+&trackpad {
+    /delete-property/ primary-tap-enable;
+};

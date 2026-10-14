@@ -23,6 +23,11 @@ Differences from the stock images:
   splitkb does with a cmake argument;
 - the dependency pins in `config/west.yml` (splitkb builds from the moving
   `main+halcyon-fixes` branch).
+- `config/halcyon_ferris_right.overlay`: the touchpad's taps are turned off
+  (the chip's tap-to-click comes with a tap-and-drag gesture that misfires
+  on short strokes); click and drag with the MB1/MB2/MB3 keys on the Mouse
+  layer;
+- wheel scrolling on the `&msc` keys at 100 units/s (top of the keymap).
 
 ```sh
 nix build              # -> result/zmk_{dongle,left,right}.uf2
