@@ -17,6 +17,10 @@
  *           30 31    32 33
  */
 
+// Wheel scrolling with the &msc keys (Nav and Mouse layers): units per
+// tick at full speed, ZMK's default is 10. Raise/lower to taste.
+#define ZMK_POINTING_DEFAULT_SCRL_VAL 25
+
 #include <behaviors.dtsi>
 #include <dt-bindings/zmk/bt.h>
 #include <dt-bindings/zmk/keys.h>
@@ -56,6 +60,11 @@
     flavor = "hold-preferred";
     tapping-term-ms = <200>;
     quick-tap-ms = <175>;
+};
+
+// Wheel scrolling keys reach full speed after this long (ZMK default 300 ms).
+&msc {
+    time-to-max-speed-ms = <150>;
 };
 
 / {
