@@ -29,6 +29,12 @@ Differences from the stock images:
   layer;
 - wheel scrolling on the `&msc` keys (Nav layer U/I, Mouse layer E/R and the
   right hand) at 200 units/s (top of the keymap).
+- `config/halcyon_ferris_dongle.conf` and `config/halcyon_ferris_right.conf`:
+  larger BLE receive/transmit buffers and event queues. The Cirque driver
+  sends three BLE notifications per packet at up to 100 packets/s; the stock
+  buffers acknowledged one or two packets per connection event and queued
+  them in a 5-entry queue that drops silently, so packets got torn apart
+  (cursor jumps, frames moving the wrong way).
 
 ```sh
 nix build              # -> result/zmk_{dongle,left,right}.uf2
