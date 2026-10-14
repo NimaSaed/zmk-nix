@@ -27,7 +27,8 @@ Differences from the stock images:
   (the chip's tap-to-click comes with a tap-and-drag gesture that misfires
   on short strokes); click and drag with the MB1/MB2/MB3 keys on the Mouse
   layer;
-- wheel scrolling on the `&msc` keys at 100 units/s (top of the keymap).
+- wheel scrolling on the `&msc` keys (Nav layer U/I, Mouse layer E/R and the
+  right hand) at 200 units/s (top of the keymap).
 
 ```sh
 nix build              # -> result/zmk_{dongle,left,right}.uf2
