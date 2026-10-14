@@ -1,0 +1,21 @@
+/*
+ * Dongle-only devicetree overlay.
+ *
+ * The right half forwards Cirque touchpad events to the dongle, where
+ * &trackpad_listener (from the splitkb mod_cirque_central shield) turns
+ * them into mouse movement. While the Mouse layer (layer 4, held via the
+ * right inner thumb key) is active, dragging on the touchpad scrolls
+ * instead of moving the cursor.
+ *
+ * Tuning: add `&zip_scroll_scaler 1 4` after the mapper to slow scrolling,
+ * or `&zip_scroll_transform INPUT_TRANSFORM_Y_INVERT` to flip direction.
+ */
+
+#include <input/processors.dtsi>
+
+&trackpad_listener {
+    scroller {
+        layers = <4>;
+        input-processors = <&zip_xy_to_scroll_mapper>;
+    };
+};

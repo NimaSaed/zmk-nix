@@ -23,6 +23,9 @@ Differences from the stock images:
   splitkb does with a cmake argument;
 - the dependency pins in `config/west.yml` (splitkb builds from the moving
   `main+halcyon-fixes` branch).
+- `config/halcyon_ferris_dongle.overlay`: while the Mouse layer (layer 4) is
+  held, moving on the touchpad scrolls instead of moving the cursor (ZMK's
+  built-in `&zip_xy_to_scroll_mapper`, nothing else).
 
 ```sh
 nix build              # -> result/zmk_{dongle,left,right}.uf2
