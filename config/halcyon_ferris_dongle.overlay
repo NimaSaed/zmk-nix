@@ -13,15 +13,24 @@
  *   the finger is on the pad. It does not engage within
  *   `require-prior-idle-ms` of a keystroke (typing), and any key press other
  *   than the ones in `excluded-positions` ends it at once.
+ * - Scrolling by pad: while the Scroll layer (5, held via V on the Mouse
+ *   layer) is active, pad motion becomes wheel events. `process-next` lets
+ *   the base chain run too, so the auto layer stays alive while scrolling.
  */
 
 #include <input/processors.dtsi>
 
 &zip_temp_layer {
-    require-prior-idle-ms = <300>;        /* not while typing */
-    excluded-positions = <12 13 14 2 3>;  /* D F G (buttons), E R (scroll) keep it on */
+    require-prior-idle-ms = <300>;           /* not while typing */
+    excluded-positions = <12 13 14 2 3 23>;  /* D F G (buttons), E R (scroll), V (pad scroll) */
 };
 
 &trackpad_listener {
     input-processors = <&zip_xy_scaler 2 1 &zip_temp_layer 4 600>;
+
+    scroller {
+        layers = <5>;
+        input-processors = <&zip_xy_to_scroll_mapper>;
+        process-next;
+    };
 };

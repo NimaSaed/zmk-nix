@@ -35,6 +35,8 @@ Differences from the stock images:
   built-in `&zip_temp_layer`), so D/F/G click and E/R scroll while the finger
   is on the pad; it does not engage within 300 ms of a keystroke, and any
   other key ends it;
+- holding V on the Mouse layer (a momentary Scroll layer, 5) makes pad
+  motion scroll instead of moving the cursor;
 - `config/halcyon_ferris_dongle.conf` and `config/halcyon_ferris_right.conf`:
   larger BLE receive/transmit buffers and event queues. The Cirque driver
   sends three BLE notifications per packet at up to 100 packets/s; the stock
