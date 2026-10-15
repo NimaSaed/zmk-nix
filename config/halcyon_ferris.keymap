@@ -74,7 +74,7 @@
     //  - balanced: a key pressed and released while the HRM is held -> hold,
     //    so Ctrl+C (hold H, tap C) works without first waiting 200 ms.
     //  - require-prior-idle-ms: when typing at speed (a key was pressed less
-    //    than 150 ms ago) the HRM is a plain tap, no delay, no misfire.
+    //    than 100 ms ago) the HRM is a plain tap, no delay, no misfire.
     //  - hold-trigger-key-positions: a left-hand HRM only becomes a modifier
     //    when combined with a right-hand key or a thumb (and vice versa), so
     //    same-hand rolls like "as" / "df" / "jk" never produce mods. Holding
@@ -85,7 +85,7 @@
             compatible = "zmk,behavior-hold-tap";
             #binding-cells = <2>;
             flavor = "balanced";
-            require-prior-idle-ms = <150>;
+            require-prior-idle-ms = <100>;
             tapping-term-ms = <280>;
             quick-tap-ms = <175>;
             bindings = <&kp>, <&kp>;
@@ -97,7 +97,7 @@
             compatible = "zmk,behavior-hold-tap";
             #binding-cells = <2>;
             flavor = "balanced";
-            require-prior-idle-ms = <150>;
+            require-prior-idle-ms = <100>;
             tapping-term-ms = <280>;
             quick-tap-ms = <175>;
             bindings = <&kp>, <&kp>;
