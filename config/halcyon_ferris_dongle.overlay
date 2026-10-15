@@ -1,0 +1,15 @@
+/*
+ * Dongle-only devicetree overlay.
+ *
+ * The right half forwards Cirque touchpad events to the dongle, where
+ * &trackpad_listener (from the splitkb mod_cirque_central shield) turns
+ * them into mouse movement. Cursor speed: `&zip_xy_scaler <mul> <div>`
+ * multiplies every packet (2 1 = double, 3 2 = 1.5x). The host's own
+ * pointer acceleration still applies on top.
+ */
+
+#include <input/processors.dtsi>
+
+&trackpad_listener {
+    input-processors = <&zip_xy_scaler 2 1>;
+};
