@@ -32,7 +32,7 @@
 #define NAV    2
 #define FUNC   3
 #define MOUSE  4
-#define SCROLL 5   // held via V on the Mouse layer: the touchpad scrolls
+#define SCROLL 5   // held via S on the Mouse layer: the touchpad scrolls
 
 // Halcyon module key slots (unused by the e-paper / Cirque modules)
 #define HLC_NONE  &none  &none  &none  &none  &none   &none  &none  &none  &none  &none
@@ -219,14 +219,15 @@ HLC_TRANS
             display-name = "Mouse";
 // -----------------------------------------------------------------------------
 // |        |       | SCR UP | SCR DN |        |   |        |        |        |       |        |
-// |        |       |  MB3   |  MB1   |  MB2   |   | MS LT  | MS DN  | MS UP  | MS RT |        |
-// |        |       |        | SCROLL |        |   | SCR LT | SCR DN | SCR UP | SCR RT|        |
+// |        | SCROLL|  MB3   |  MB1   |  MB2   |   | MS LT  | MS DN  | MS UP  | MS RT |        |
+// |        |       |        |  FWD   |  BACK  |   | SCR LT | SCR DN | SCR UP | SCR RT|        |
 // SCROLL = hold: the touchpad scrolls instead of moving the cursor
+// BACK/FWD = browser back/forward (&kp C_AC_BACK / C_AC_FORWARD)
 //                           |        |        |   |        |        |
             bindings = <
 &none  &none  &msc SCRL_UP  &msc SCRL_DOWN  &none    &none           &none           &none         &none            &none
-&none  &none  &mkp MB3      &mkp MB1        &mkp MB2     &mmv MOVE_LEFT  &mmv MOVE_DOWN  &mmv MOVE_UP  &mmv MOVE_RIGHT  &none
-&none  &none  &none     &mo SCROLL  &none      &msc SCRL_LEFT  &msc SCRL_DOWN  &msc SCRL_UP  &msc SCRL_RIGHT  &none
+&none  &mo SCROLL  &mkp MB3  &mkp MB1    &mkp MB2     &mmv MOVE_LEFT  &mmv MOVE_DOWN  &mmv MOVE_UP  &mmv MOVE_RIGHT  &none
+&none  &none  &none     &kp C_AC_FORWARD  &kp C_AC_BACK    &msc SCRL_LEFT  &msc SCRL_DOWN  &msc SCRL_UP  &msc SCRL_RIGHT  &none
                                       &trans        &trans           &trans        &trans
 HLC_TRANS
             >;
@@ -234,7 +235,7 @@ HLC_TRANS
 
         scroll_layer {
             display-name = "Scroll";
-// Held via V on the Mouse layer. Only exists so the dongle can tell "the
+// Held via S on the Mouse layer. Only exists so the dongle can tell "the
 // touchpad should scroll" apart from the Mouse layer, which switches on by
 // itself whenever the touchpad is used. Every key falls through.
             bindings = <

@@ -9,11 +9,12 @@
  *   (2 1 = double, 3 2 = 1.5x). The host's own acceleration applies on top.
  * - Auto mouse layer: `&zip_temp_layer <layer> <timeout-ms>` switches the
  *   Mouse layer (4) on while the pad is moved and off after `timeout-ms`
- *   without movement, so D/F/G are the mouse buttons and E/R scroll while
- *   the finger is on the pad. It does not engage within
+ *   without movement, so D/F/G are the mouse buttons, E/R scroll, S holds
+ *   pad scroll and V/B are browser forward/back while the finger is on the
+ *   pad. It does not engage within
  *   `require-prior-idle-ms` of a keystroke (typing), and any key press other
  *   than the ones in `excluded-positions` ends it at once.
- * - Scrolling by pad: while the Scroll layer (5, held via V on the Mouse
+ * - Scrolling by pad: while the Scroll layer (5, held via S on the Mouse
  *   layer) is active, pad motion becomes wheel events. `process-next` lets
  *   the base chain run too, so the auto layer stays alive while scrolling.
  */
@@ -22,7 +23,7 @@
 
 &zip_temp_layer {
     require-prior-idle-ms = <300>;           /* not while typing */
-    excluded-positions = <12 13 14 2 3 23>;  /* D F G (buttons), E R (scroll), V (pad scroll) */
+    excluded-positions = <12 13 14 2 3 11 23 24>;  /* D F G (buttons), E R (scroll), S (pad scroll), V B (fwd/back) */
 };
 
 &trackpad_listener {
