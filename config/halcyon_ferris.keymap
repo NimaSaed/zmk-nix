@@ -106,7 +106,7 @@
         };
     };
 
-    // Combos from the Oryx layout (defined on the Base layer, 50 ms term
+    // Combos from the Oryx layout (active on all layers, 50 ms term
     // like QMK's default COMBO_TERM).
     // E+R and O+P sit on very common English bigrams ("there", "open"), so
     // they only fire after a short typing pause (require-prior-idle-ms);
@@ -117,7 +117,6 @@
         combo_esc {          // E + R
             key-positions = <2 3>;
             bindings = <&kp ESC>;
-            layers = <BASE>;
             timeout-ms = <50>;
             require-prior-idle-ms = <100>;
         };
@@ -125,7 +124,6 @@
         combo_del {          // O + P
             key-positions = <8 9>;
             bindings = <&kp DEL>;
-            layers = <BASE>;
             timeout-ms = <50>;
             require-prior-idle-ms = <100>;
         };
@@ -133,14 +131,12 @@
         combo_tab {          // C + V
             key-positions = <22 23>;
             bindings = <&kp TAB>;
-            layers = <BASE>;
             timeout-ms = <50>;
         };
 
         combo_tmux_prefix {  // J + K -> Ctrl+B (Oryx macro "tmuxprefix")
             key-positions = <16 17>;
             bindings = <&kp LC(B)>;
-            layers = <BASE>;
             timeout-ms = <50>;
         };
     };
